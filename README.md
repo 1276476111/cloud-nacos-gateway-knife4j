@@ -1,12 +1,20 @@
 # spring cloud + nacos +gateway + knife4j
 
-### 这是一个微服务聚合文档
-切勿注意
-- 一个版本的 knife4j 有一种配置方法
-- 聚合服务需要用到gateway
-- gateway与其他服务jar包用同一个即可
+## 这是一个微服务聚合文档
+项目访问地址： http://localhost:8333/doc.html
+## 什么是knife4j？
+knife4j 就是 swagger的升级版， 除了美化了swagger的界面。而且还有其他的增强功能<br>
+ 
+## 增强功能有哪些？
+- tags分组标签排序、api接口排序
 
-##### 所有服务引用的maven
+## 注意
+- 聚合服务的文档需要用到gateway，所以想搭建聚合服务文档应先搭建网关
+- 一个版本的 knife4j 有一种配置方法， 不可将不同版本knife4j的配置方式混在一起
+- 使用排序时，需要先在文档页面进行设置： 访问地址http://localhost:8333/doc.html->文档管理->个性化设置->将“
+  启用Knife4j提供的增强功能”勾选即可
+
+##### 无论是网关还是其他服务，都引用如下maven
 ```
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
