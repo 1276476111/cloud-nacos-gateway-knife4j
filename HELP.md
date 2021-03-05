@@ -1,8 +1,8 @@
 # spring cloud + nacos +gateway + knife4j
 
 ### 这是一个微服务聚合文档
-切勿注意
-- 一个版本的 knife4j 有一种配置方法
+- knife4j 就是增强版得swagger
+- 每个版本的 knife4j 都有它自己得配置方法
 - 聚合服务需要用到gateway
 - gateway与其他服务jar包用同一个即可
 
