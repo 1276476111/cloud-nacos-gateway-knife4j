@@ -2,7 +2,7 @@
 
 ### 这是一个微服务聚合文档
 - knife4j 就是增强版得swagger
-- 每个版本的 knife4j 都有它自己得配置方法
+- 每个版本的 knife4j 都有它自己得配置方法，此项目引用 knife4j 得版本为 2.0.3
 - 聚合服务需要用到gateway
 - gateway与其他服务jar包用同一个即可
 
