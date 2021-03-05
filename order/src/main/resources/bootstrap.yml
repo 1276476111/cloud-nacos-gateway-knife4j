@@ -1,0 +1,103 @@
+server:
+  port: 7100
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: order-service
+  #  profiles:
+  #    active: dev
+  cloud:
+    #指定nacos配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        # public环境
+        namespace:
+      #        # 自定义的环境（dev/test）
+      #        namespace: 2619670c-d55b-407d-bda5-e0f510a37fe6
+      config:
+        server-addr: 127.0.0.1:8848
+        #        namespace: 2619670c-d55b-407d-bda5-e0f510a37fe6
+        namespace:
+        file-extension: yml
+        # 公共配置
+        extension-configs[0]:
+          data-id: share-config.yml
+          group: SHARE_GROUP
+          refresh: true
+    #指定seata配置
+    alibaba:
+      seata:
+        tx-service-group: DEFAULT_GROUP
+
+logging:
+  level:
+    com.alibaba.nacos.client.*: WARN
+
+### ----------------------------nacos-公用配置开始---------------------------- ###
+##数据源配置
+#spring:
+#  datasource:
+#    url: jdbc:mysql://127.0.0.1:3308/my_test?useUnicode=true&autoReconnect=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+#    # driver-class-name: com.mysql.jdbc.Driver
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: root
+##ORM框架
+#mybatis-plus:
+#  #外部化xml配置
+#  #configure-location: classpath:mybatis-configure.xml
+#  #指定外部化 MyBatis Properties 配置，通过该配置可以抽离配置，实现不同环境的配置部署
+#  #configuration-properties: classpath:mybatis/configure.properties
+#  #xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+#  mapper-locations: classpath*:mapper/**/*.xml
+#  #扫描实体类
+#  type-aliases-package: com.qsn.stock.test
+#  #项目启动会检查xml配置存在(只在开发时候打开)
+#  check-config-location: true
+#  #SIMPLE：该执行器类型不做特殊的事情，为每个语句的执行创建一个新的预处理语句,REUSE：该执行器类型会复用预处理语句,BATCH：该执行器类型会批量执行所有的更新语句
+#  default-executor-type: REUSE
+## 配置feign-OK-HTTP
+#feign:
+#  httpclient:
+#    enabled: false
+#  okhttp:
+#    enabled: true
+## 连接/响应时间
+#ribbon:
+#  #建立连接所用的时间，适用于网络状况正常的情况下，两端连接所需要的时间
+#  ConnectTimeOut: 3000
+#  #建立连接后从服务端读取到可用资源所用的时间
+#  ReadTimeOut: 5000
+##分布式事务框架
+#seata:
+#  enabled: true
+#  application-id: order-service
+#  tx-service-group: my_test_tx_group    #此处配置自定义的seata事务分组名称
+#  enable-auto-data-source-proxy: true    #开启数据库代理
+#  config:
+#    type: nacos
+#    nacos:
+#      namespace:
+#      server-addr: 127.0.0.1:8848
+#      group: SEATA_GROUP
+#      username: nacos
+#      password: nacos
+#  registry:
+#    type: nacos
+#    nacos:
+#      application: seata-server
+#      server-addr: 127.0.0.1:8848
+#      namespace:
+#      username: nacos
+#      password: nacos
+#  service:
+#    vgroup-mapping:
+#      stock-service_group: default
+#    disable-global-transaction: false
+#  client:
+#    rm:
+#      report-success-enable: false
+### ----------------------------nacos-公用配置结束---------------------------- ###

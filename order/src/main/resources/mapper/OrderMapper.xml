@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qsn.order.model.mapper.OrderMapper">
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="OrderResultMap" type="com.qsn.order.model.entity.Order">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="commodity_code" property="commodityCode"/>
+        <result column="count" property="count"/>
+        <result column="money" property="money"/>
+    </resultMap>
+
+
+    <!-- SQL列 -->
+    <sql id="OrderColumnList">
+        id, user_id, commodity_code, count, money
+    </sql>
+
+    <!-- 分页 -->
+    <select id="listPageOrder" resultMap="OrderResultMap">
+        SELECT <include refid="OrderColumnList"/>
+        FROM t_order
+    </select>
+
+    <!-- 列表 -->
+    <select id="listOrder" resultMap="OrderResultMap">
+        SELECT <include refid="OrderColumnList"/>
+        FROM t_order
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insertOrder" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId!=null and userId!=''">
+                 user_id,
+            </if>
+            <if test="commodityCode!=null and commodityCode!=''">
+                 commodity_code,
+            </if>
+            <if test="count!=null and count!=''">
+                 count,
+            </if>
+            <if test="money!=null and money!=''">
+                 money,
+            </if>
+        </trim>
+        <trim prefix=" VALUES (" suffix=")" suffixOverrides=",">
+            <if test="userId!=null and userId!=''">
+                 #{userId},
+            </if>
+            <if test="commodityCode!=null and commodityCode!=''">
+                 #{commodityCode},
+            </if>
+            <if test="count!=null and count!=''">
+                 #{count},
+            </if>
+            <if test="money!=null and money!=''">
+                 #{money},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 修改 -->
+    <update id="updateOrderById">
+        UPDATE t_order
+        <set>
+            <if test="userId!=null and userId!=''">
+                 user_id=#{userId},
+            </if>
+            <if test="commodityCode!=null and commodityCode!=''">
+                 commodity_code=#{commodityCode},
+            </if>
+            <if test="count!=null and count!=''">
+                 count=#{count},
+            </if>
+            <if test="money!=null and money!=''">
+                 money=#{money},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!-- 详情 -->
+    <select id="getOrderById" resultMap="OrderResultMap">
+        SELECT <include refid="OrderColumnList"/>
+        FROM t_order
+        WHERE id=#{id}
+    </select>
+
+
+
+</mapper>
