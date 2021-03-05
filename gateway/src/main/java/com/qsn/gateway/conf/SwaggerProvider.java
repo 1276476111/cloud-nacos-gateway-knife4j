@@ -22,6 +22,7 @@ import java.util.Set;
  */
 @Component
 public class SwaggerProvider implements SwaggerResourcesProvider {
+
     /**
      * 接口地址
      */
