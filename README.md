@@ -1,27 +1,27 @@
 # spring cloud + nacos +gateway + knife4j
 
 ## 这是一个微服务聚合文档
-项目访问地址： http://localhost:8333/doc.html
+项目文档访问地址： http://localhost:8333/doc.html
 ## 什么是knife4j？
 knife4j 就是 swagger的升级版， 除了美化了swagger的界面。而且还有其他的增强功能<br>
  
 ## 增强功能有哪些？
-- tags分组标签排序、api接口排序
+- tags分组标签排序、api接口排序、markdown文档下载、权限控制
 
 ## 注意
 - 聚合服务的文档需要用到gateway，所以想搭建聚合服务文档应先搭建网关
 - 一个版本的 knife4j 有一种配置方法， 不可将不同版本knife4j的配置方式混在一起
-- 使用排序时，需要先在文档页面进行设置： 访问地址http://localhost:8333/doc.html->文档管理->个性化设置->将“
-  启用Knife4j提供的增强功能”勾选即可
+- 使用排序时，需要先在文档页面进行设置： **访问文档访问地址->文档管理->个性化设置->将【启用Knife4j提供的增强功能】勾选即可**
+- 使用权限控制时， 网关不需要单独配置yml文件。但是需要权限控制的服务需要用到 yml 的文件配置
 
-##### 无论是网关还是其他服务，都引用如下maven
+##无论是网关还是其他服务，都引用如下maven
 ```
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
         </dependency>
 ```
-##### 网关配置
+## 网关配置
 ```
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,9 +151,33 @@ public class SwaggerHandler {
         return Mono.just((new ResponseEntity<>(swaggerResources.get(), HttpStatus.OK)));
     }
 }
-
 ```
-##### 其他服务配置
+## 网关.yml文件
+```
+server:
+  port: 8333
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 启用自动根据服务ID生成路由
+          lower-case-service-id: true # 设置路由的路径为小写的服务ID
+      routes:
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/order/**
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/user/**
+```
+
+## 其他服务配置
 ```
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.google.common.base.Predicates;
@@ -211,3 +235,18 @@ public class SwaggerConfig {
 
 }
 ```
+## 其他服务.yml文件
+```
+knife4j:
+  # 开启Swagger的Basic认证功能,默认是false
+  # 注：（1）默认账号/密码  admin/123321; （2）但是如果不配置密码。 即使输入对了，也始终在输入密码的地方重新循环;（3）如果用浏览器记住密码了则不用输入， swagger会直接读取进去不会再手动输入一次；
+  basic:
+    enable: true
+    # Basic认证用户名
+    username: test
+    # Basic认证密码
+    password: 1234567
+## 开启生产环境屏蔽(true看不到文档；false可以看到文档，但是密码失效)
+#  production: false
+```
+

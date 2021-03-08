@@ -34,6 +34,19 @@ logging:
   level:
     com.alibaba.nacos.client.*: WARN
 
+knife4j:
+  # 开启Swagger的Basic认证功能,默认是false
+  # 注：（1）默认账号/密码  admin/123321; （2）但是如果不配置密码。 即使输入对了，也始终在输入密码的地方重新循环;（3）如果用浏览器记住密码了则不用输入， swagger会直接读取进去不会再手动输入一次；
+  basic:
+    enable: true
+    # Basic认证用户名
+    username: test
+    # Basic认证密码
+    password: 1234567
+## 开启生产环境屏蔽(true看不到文档；false可以看到文档，但是密码失效)
+#  production: false
+
+
 ### ----------------------------nacos-公用配置开始---------------------------- ###
 ##数据源配置
 #spring:

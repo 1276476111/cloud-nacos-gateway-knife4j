@@ -17,6 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * 配置Swagger主页信息
+ * 需要 knife4j 的权限控制（账号密码） 才需要引用此包:  @Import(BeanValidatorPluginsConfiguration.class), 对应jar：spring-boot-starter-validation
  *
  * @author qiusn
  * @date 2021-03-05
