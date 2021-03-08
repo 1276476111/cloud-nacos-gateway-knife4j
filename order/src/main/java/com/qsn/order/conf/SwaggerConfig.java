@@ -54,7 +54,7 @@ public class SwaggerConfig {
                 contact("小凡").
                 version("1.0 version").
                 termsOfServiceUrl("api/order/**").
-                description("用户模块-这是一个 cloud+nacos+gateway+knife4j 的项目")
+                description("订单模块-这是一个 cloud+nacos+gateway+knife4j 的项目")
                 .build();
     }
 
